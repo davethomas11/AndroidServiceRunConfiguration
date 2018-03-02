@@ -1,0 +1,21 @@
+<idea-plugin>
+  <id>com.daveanthonythomas.android.run</id>
+  <name>Service Run Configuration</name>
+  <version>1.0</version>
+  <vendor email="davethomas11@icloud.com" url="http://www.daveanythonythomas.com">DM Thomas Consulting</vendor>
+
+  <depends>org.jetbrains.android</depends>
+  <description><![CDATA[
+      An Android run configuration that launches a Service instead of an Activity.
+      Useful for debug modules or apps that are only Services.
+    ]]></description>
+
+  <change-notes><![CDATA[]]>
+  </change-notes>
+
+  <idea-version since-build="171.0"/>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <configurationType implementation="com.daveanthonythomas.android.run.AndroidServiceRunConfigurationType" />
+  </extensions>
+</idea-plugin>
