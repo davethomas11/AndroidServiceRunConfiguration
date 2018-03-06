@@ -3,9 +3,17 @@ package com.daveanthonythomas.android.run;
 import com.android.tools.idea.run.*;
 import com.android.tools.idea.run.tasks.LaunchTask;
 import com.android.tools.idea.run.util.LaunchStatus;
+import com.intellij.execution.ExecutionException;
+import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.ConfigurationFactory;
+import com.intellij.execution.configurations.JavaRunConfigurationModule;
 import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.execution.configurations.RuntimeConfigurationError;
+import com.intellij.execution.filters.TextConsoleBuilder;
+import com.intellij.execution.filters.TextConsoleBuilderFactory;
+import com.intellij.execution.process.ProcessHandler;
+import com.intellij.execution.ui.ConsoleView;
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Pair;
@@ -42,7 +50,13 @@ public class AndroidServiceRunConfiguration extends AndroidRunConfigurationBase 
     @NotNull
     @Override
     protected ConsoleProvider getConsoleProvider() {
-        return null;
+        return (parent, handler, executor) -> {
+            Project project = getConfigurationModule().getProject();
+            TextConsoleBuilder builder = TextConsoleBuilderFactory.getInstance().createBuilder(project);
+            ConsoleView console = builder.getConsole();
+            console.attachToProcess(handler);
+            return console;
+        };
     }
 
     @Nullable
@@ -53,7 +67,7 @@ public class AndroidServiceRunConfiguration extends AndroidRunConfigurationBase 
 
     @Override
     protected boolean supportMultipleDevices() {
-        return false;
+        return true;
     }
 
     @NotNull
