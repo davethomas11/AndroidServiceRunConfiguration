@@ -67,14 +67,14 @@ public class SpecificServiceLaunch extends LaunchOption<SpecificServiceLaunch.St
             try {
                 this.getActivityLocator(facet).validate();
                 return ImmutableList.of();
-            } catch (ActivityLocatorException var3) {
+            } catch (Exception var3) {
                 return ImmutableList.of(ValidationError.warning(var3.getMessage()));
             }
         }
 
         @NotNull
-        private SpecificActivityLocator getActivityLocator(@NotNull AndroidFacet facet) {
-            return new SpecificActivityLocator(facet, this.SERVICE_CLASS);
+        private SpecificServiceLocator getActivityLocator(@NotNull AndroidFacet facet) {
+            return new SpecificServiceLocator(facet, this.SERVICE_CLASS);
         }
     }
 }
